@@ -41,7 +41,7 @@ func StaticPath(path string) Path {
 func CustomPath(path string) Path {
 	paths, err := parseCgroupFile(path)
 	if err != nil {
-		return errorPath(errors.Wrapf(err, "parse cgroup file %s", p))
+		return errorPath(errors.Wrapf(err, "parse cgroup file %s", path))
 	}
 	return existingPath(paths, "")
 }
