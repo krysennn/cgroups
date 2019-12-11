@@ -36,6 +36,16 @@ func StaticPath(path string) Path {
 	}
 }
 
+// CustomPath will return the correct cgroup paths for wathever existing process running inside a cgroup
+// You can read cgroup of qemu virtual-machine with this function
+func CustomPath(path string) Path {
+	paths, err := parseCgroupFile(path)
+	if err != nil {
+		return errorPath(errors.Wrapf(err, "parse cgroup file %s", path))
+	}
+	return existingPath(paths, "")
+}
+
 // NestedPath will nest the cgroups based on the calling processes cgroup
 // placing its child processes inside its own path
 func NestedPath(suffix string) Path {
